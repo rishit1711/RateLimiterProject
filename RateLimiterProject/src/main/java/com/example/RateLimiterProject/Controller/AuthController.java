@@ -28,13 +28,14 @@ public class AuthController {
     private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
-    @PostMapping("/register")
+    @PostMapping("/signup")
     public ResponseEntity<User> registerUser(@RequestBody SignUpRequest request){
         User user = authService.signup(request);
         return ResponseEntity.ok(user);
 
 
     }
+    @PostMapping("/signin")
     public ResponseEntity<LoginResponseDto> LoginUser(@RequestBody SignInRequest request, HttpServletResponse httpServletResponse){
 
         String[] arr = authService.signIn(request);

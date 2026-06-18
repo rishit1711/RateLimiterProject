@@ -1,6 +1,7 @@
 package com.example.RateLimiterProject.AuthenticationService;
 
 import com.example.RateLimiterProject.Entity.User;
+import com.example.RateLimiterProject.Exceptions.ResourceNotFoundException;
 import com.example.RateLimiterProject.Repository.UserRepository;
 import com.example.RateLimiterProject.Security.JwtService;
 import com.example.RateLimiterProject.dto.SignInRequest;
@@ -27,17 +28,19 @@ import java.util.Set;
         private final PasswordEncoder passwordEncoder;
         private final AuthenticationManager authenticationManager;
         private final JwtService jwtService;
-        public User signup(@RequestBody SignUpRequest requestDto){
-            User user = userRepository.findByEmail(requestDto.getEmail());
-            if(user!=null){
+        public User signup(SignUpRequest requestDto) {
+
+            if(userRepository.findByEmail(requestDto.getEmail()).isPresent()) {
                 throw new RuntimeException("Email Already Exists");
             }
+
             User newUser = modelMapper.map(requestDto, User.class);
 
-            newUser.setPassword(passwordEncoder.encode(requestDto.getPassword()));
-            newUser=userRepository.save(newUser);
+            newUser.setPassword(
+                    passwordEncoder.encode(requestDto.getPassword())
+            );
 
-            return modelMapper.map(newUser, User.class);
+            return userRepository.save(newUser);
         }
         public String[] signIn(@RequestBody SignInRequest request){
 
