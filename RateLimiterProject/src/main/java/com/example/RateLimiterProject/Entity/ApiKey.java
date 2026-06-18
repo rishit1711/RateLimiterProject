@@ -18,8 +18,6 @@ public class ApiKey {
     private boolean isActive;
     @Column(nullable = false)
     private Integer rateLimit;
-    @Column(nullable = false)
-    private RateLimitType Strategy;
     private LocalDateTime createdAt;
     @ManyToOne
     @JoinColumn(name = "user_Api_Key")
