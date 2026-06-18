@@ -1,4 +1,4 @@
-package com.example.RateLimiterProject.RateLimiterProject;
+package com.example.RateLimiterProject;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -8,6 +8,7 @@ public class RateLimiterProjectApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(RateLimiterProjectApplication.class, args);
+
 	}
 
 }
