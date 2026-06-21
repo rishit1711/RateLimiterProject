@@ -33,6 +33,8 @@ public class ApiServiceImpl implements ApiService {
                                         .createdAt(LocalDateTime.now())
                                                 .rateLimit(50).build();
 
+        apiKey1.setActive(true);
+
         apiKeyRepository.save(apiKey1);
 
 

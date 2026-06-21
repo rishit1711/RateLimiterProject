@@ -17,7 +17,7 @@ public class ApiKey {
     private Long Id;
     @Column(unique = true,nullable = false)
     private String key;
-//    private boolean isActive;
+    private boolean isActive;
     @Column(nullable = false)
     private Integer rateLimit;
     private LocalDateTime createdAt;

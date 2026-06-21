@@ -1,9 +1,14 @@
 package com.example.RateLimiterProject.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
+
 @Builder
 @Data
+@AllArgsConstructor
+@RequiredArgsConstructor
 public class ApiKeyResponseDto {
 
     private Long id;
@@ -12,5 +17,5 @@ public class ApiKeyResponseDto {
 
     private Integer rateLimit;
 
-    private Boolean active;
+    private Boolean isActive;
 }

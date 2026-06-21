@@ -23,6 +23,8 @@ public class ApiKeyController {
     public ResponseEntity<ApiKeyResponseDto> apiKey(){
         ApiKeyResponseDto dto=apiService.GenerateApiKey();
 
+        return ResponseEntity.ok(dto);
+
 
 
     }
