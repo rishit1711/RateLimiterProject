@@ -1,6 +1,7 @@
 package com.example.RateLimiterProject.Security;
 
 import com.example.RateLimiterProject.Entity.User;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,5 +37,15 @@ public class JwtService {
                 .signWith(getSecretKey())
                 .compact();
 
+    }
+
+    public Long GetUserIdFromToken(String token) {
+        Claims claims =Jwts.parser()
+                .verifyWith(getSecretKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+
+        return  Long.valueOf(claims.getSubject());
     }
 }
