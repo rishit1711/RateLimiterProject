@@ -1,6 +1,10 @@
 package com.example.RateLimiterProject.Security;
 
+import com.example.RateLimiterProject.Redis.RateLimitingFilter;
+import com.example.RateLimiterProject.Service.RateLimiterService;
+import jakarta.servlet.Filter;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.util.RateLimiter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,12 +23,15 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     private final JwtAuthFilter jwtAuthFilter;
+    private final RateLimitingFilter rateLimitingFilter;
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http.csrf(csrf -> csrf.disable())
+                .addFilterBefore(rateLimitingFilter,JwtAuthFilter.class)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+
                 .authorizeHttpRequests(auth->auth
                         .requestMatchers("/auth/signup").permitAll()
                         .requestMatchers(("/auth/signin")).permitAll()
