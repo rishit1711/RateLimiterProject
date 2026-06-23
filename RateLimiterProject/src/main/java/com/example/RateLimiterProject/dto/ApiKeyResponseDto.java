@@ -17,5 +17,5 @@ public class ApiKeyResponseDto {
 
     private Integer rateLimit;
 
-    private Boolean isActive;
+    private Boolean active;
 }

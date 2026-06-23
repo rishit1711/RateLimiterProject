@@ -6,9 +6,9 @@ import com.example.RateLimiterProject.dto.ApiKeyResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/apiKey")
@@ -25,7 +25,19 @@ public class ApiKeyController {
 
         return ResponseEntity.ok(dto);
 
-
-
     }
+
+    @GetMapping("/myKeys")
+    public ResponseEntity<List<ApiKeyResponseDto>> getKey(){
+        return ResponseEntity.ok(apiService.getmyKeys());
+    }
+
+    @DeleteMapping("/{Id}")
+    public ResponseEntity<Void> delKey(@PathVariable Long Id){
+        System.out.println("Delete Called");
+        apiService.deleteKey(Id);
+        return ResponseEntity.noContent().build();
+    }
+
+
 }
