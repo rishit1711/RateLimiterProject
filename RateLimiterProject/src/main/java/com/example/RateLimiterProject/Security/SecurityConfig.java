@@ -29,11 +29,15 @@ public class SecurityConfig {
 
         http.csrf(csrf -> csrf.disable())
 
-                .addFilterBefore(rateLimitingFilter,
-                        UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(
+                        jwtAuthFilter,
+                        UsernamePasswordAuthenticationFilter.class
+                )
 
-                .addFilterAfter(jwtAuthFilter,
-                        rateLimitingFilter.getClass())
+                .addFilterBefore(
+                        rateLimitingFilter,
+                        UsernamePasswordAuthenticationFilter.class
+                )
 
                 .authorizeHttpRequests(auth->auth
                         .requestMatchers("/auth/signup").permitAll()

@@ -17,6 +17,15 @@ public class RateLimitingFilter extends OncePerRequestFilter {
     private final RateLimiterService rateLimiterService;
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        String path = request.getRequestURI();
+
+        if (path.equals("/api/v1/auth/signin")
+                || path.equals("/api/v1/auth/signup")
+                || path.equals("/api/v1/apiKey/generate")) {
+
+            filterChain.doFilter(request, response);
+            return;
+        }
 
         String ApiKey = request.getHeader("API-KEY");
 

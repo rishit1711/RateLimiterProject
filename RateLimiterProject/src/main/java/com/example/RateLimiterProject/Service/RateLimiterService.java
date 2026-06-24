@@ -28,6 +28,8 @@ public class RateLimiterService {
                     Duration.ofSeconds(WINDOW_SECONDS)
             );
         }
+        System.out.println("API KEY = " + apiKey);
+        System.out.println("COUNT = " + count);
 
         return count != null && count <= LIMIT;
     }
