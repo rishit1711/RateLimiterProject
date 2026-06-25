@@ -30,7 +30,7 @@ public class RateLimiterService {
         }
         System.out.println("API KEY = " + apiKey);
         System.out.println("COUNT = " + count);
-
+        // checks redis count and matches with limit
         return count != null && count <= LIMIT;
     }
 }
