@@ -2,6 +2,7 @@ package com.example.RateLimiterProject.Security;
 
 import com.example.RateLimiterProject.Redis.RateLimitingFilter;
 
+import com.example.RateLimiterProject.TokenBucket.TokenBucketFilter;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.context.annotation.Bean;
@@ -22,7 +23,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     private final JwtAuthFilter jwtAuthFilter;
-    private final RateLimitingFilter rateLimitingFilter;
+    private final TokenBucketFilter tokenBucketFilter;
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -35,8 +36,8 @@ public class SecurityConfig {
                 )
 
                 .addFilterBefore(
-                        rateLimitingFilter,
-                        UsernamePasswordAuthenticationFilter.class
+                        tokenBucketFilter,
+                        JwtAuthFilter.class
                 )
 
                 .authorizeHttpRequests(auth->auth
