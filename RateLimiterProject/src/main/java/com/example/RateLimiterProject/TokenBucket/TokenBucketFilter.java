@@ -14,9 +14,19 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class TokenBucketFilter extends OncePerRequestFilter {
 
-    private TokenBucketService tokenBucketService;
+    private final  TokenBucketService tokenBucketService;
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+
+        String path = request.getRequestURI();
+
+        if (path.equals("/api/v1/auth/signin")
+                || path.equals("/api/v1/auth/signup")
+                || path.equals("/api/v1/apiKey/generate")) {
+
+            filterChain.doFilter(request, response);
+            return;
+        }
 
 
         String apiKey = request.getHeader("API-KEY");
@@ -24,6 +34,7 @@ public class TokenBucketFilter extends OncePerRequestFilter {
         if(apiKey==null || apiKey.isBlank()){
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.getWriter().write("Api Key is Required");
+            return;
 
 
         }

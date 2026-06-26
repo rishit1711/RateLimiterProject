@@ -10,8 +10,8 @@ import java.time.Instant;
 
 public class TokenBucketService {
 
-    private static  Long CAPACITY = 10L;
-    private static final long REFILL_RATE = 2;
+    private static  Long CAPACITY = 5L;
+    private static final long REFILL_RATE = 0;
 
     @Autowired
     private RedisTemplate<String,Object> redisTemplate;
@@ -24,8 +24,10 @@ public class TokenBucketService {
         Bucket bucket = (Bucket) redisTemplate
                 .opsForValue()
                 .get(redisKey);
+        System.out.println("Bucket from Redis = " + bucket);
 
         if (bucket == null) {
+            System.out.println("New Bucket Created");
 
             bucket = new Bucket();
 
@@ -62,6 +64,7 @@ public class TokenBucketService {
 
             return true;
         }
+        redisTemplate.opsForValue().set(redisKey, bucket);
 
         return false;
     }
